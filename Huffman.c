@@ -77,7 +77,7 @@ void Decode(int unique,char A[],char B[256][256],int len[],FILE *fp,FILE *fr){
     }
 }
 
-void heapify(struct Heap* h,int i){
+void heapify(struct Heap* h,int i){                         //Min-heapify
     int k=i;
     int leftchild=2*i+1;
     int rightchild=2*i+2;
@@ -94,7 +94,7 @@ void heapify(struct Heap* h,int i){
     }
 }
 
-struct Heap* BuildHeap(char arr1[],int arr2[],int unique){
+struct Heap* BuildHeap(char arr1[],int arr2[],int unique){                  //Building a min heap of nodes(characters and frequencies)
     struct Heap* h=(struct Heap*)malloc(sizeof(struct Heap));
     h->len=0;
     h->arr = (struct Node**)malloc(unique*sizeof(struct Node*));
@@ -170,7 +170,7 @@ void printTree(struct Node *p){
 }
 
 struct Node *HuffmanTree(struct Heap *h,int unique){
-    struct Node *l;
+    struct Node *l;                                     //Building a Huffman Tree,minimum elements at the bottom
     struct Node *r;
     while(h->len!=1){
         l=ExtractMin(h);
@@ -194,7 +194,7 @@ void WriteMetatoFile(char c,char arr[],int n,FILE *fp){
     fprintf(fp,"\n");
 }
 
-void Coding(struct Node *head,char arr[],int n,FILE *fp){
+void Coding(struct Node *head,char arr[],int n,FILE *fp){           //Constructs the code of each character.
     if(head->left!=NULL){
         arr[n]='0';
         int N=n+1;
@@ -293,7 +293,7 @@ int main()
     scanf("%s",&fname);
     char gname[128];
     printf("Output File");
-    scanf("%s",&gname);
+    scanf("%s",&gname);             
     int x;
     printf("Enter preferred mode of file ");
     scanf("%d",&x);
@@ -320,7 +320,7 @@ int main()
         frequency[i]=0;
         char c=fgetc(fr);
         int flag=0;
-        for(int j=0;j<unique;j++){
+        for(int j=0;j<unique;j++){                  //Maintaining arrays of unique characters and their frequencies
             if(array[j]==c){
                 //printarraychar(array,unique);
                 frequency[j]+=1;
@@ -336,7 +336,7 @@ int main()
    }
    fclose(fr);
 
-   struct Heap *h=BuildHeap(array,frequency,unique);
+   struct Heap *h=BuildHeap(array,frequency,unique);                //Making a heap of characters depending on frequency
    struct Node *H=HuffmanTree(h,unique);
     char arr[256];
    struct Code* a[256];
@@ -346,7 +346,7 @@ int main()
    
     //FILE *fp,*fr;
     fp=fopen(gname,"w");
-    Coding(H,arr,0,fp);
+    Coding(H,arr,0,fp);                                             //Write to output file along with metadata
     fclose(fp);
     fp=fopen(gname,"r");
    ReadFromMetaFile(A,B,len,unique,fp);
